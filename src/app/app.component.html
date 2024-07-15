@@ -1,0 +1,13 @@
+<div>
+  <h1>Angular SSO Client</h1>
+  <div>
+    <input [(ngModel)]="username" placeholder="Username" />
+    <input [(ngModel)]="password" type="password" placeholder="Password" />
+    <button (click)="login()">Login</button>
+  </div>
+  <div>
+    <br>
+    <button (click)="validateToken()">Validate Token</button>
+  </div>
+  <p>{{ message }}</p>
+</div>
