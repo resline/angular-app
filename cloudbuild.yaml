@@ -1,0 +1,23 @@
+steps:
+- name: 'node:16'
+  entrypoint: 'npm'
+  args: ['install']
+- name: 'node:16'
+  entrypoint: 'npm'
+  args: ['run', 'build', '--', '--configuration', 'production']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/chatgptdata-425219/angular-app', '.']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/chatgptdata-425219/angular-app']
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  entrypoint: 'gcloud'
+  args:
+  - 'run'
+  - 'deploy'
+  - 'angular-app'
+  - '--image'
+  - 'gcr.io/chatgptdata-425219/angular-app'
+  - '--region'
+  - 'europe-north1'
+  - '--platform'
+  - 'managed'
