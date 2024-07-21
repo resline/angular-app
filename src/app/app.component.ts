@@ -1,14 +1,5 @@
 import { Component } from '@angular/core';
 import { AuthService } from './services/auth.service';
-import { HttpErrorResponse } from '@angular/common/http';
-
-interface LoginResponse {
-  message: string;
-}
-
-interface ValidationResponse {
-  message: string;
-}
 
 @Component({
   selector: 'app-root',
@@ -16,20 +7,19 @@ interface ValidationResponse {
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  message = '';
-  username = '';
-  password = '';
+  username: string = '';
+  password: string = '';
+  message: string = '';
 
   constructor(private authService: AuthService) {}
 
   login() {
-    console.log('Login button clicked');
     this.authService.login(this.username, this.password).subscribe(
-      (response: LoginResponse) => {
+      response => {
         this.message = 'Zalogowano pomyślnie';
-        console.log('Login response:', response);
+        console.log('Login successful:', response);
       },
-      (error: HttpErrorResponse) => {
+      error => {
         this.message = 'Błąd logowania';
         console.error('Login error:', error);
       }
@@ -37,14 +27,13 @@ export class AppComponent {
   }
 
   validateToken() {
-    console.log('Validate Token button clicked');
     this.authService.validateToken().subscribe(
       response => {
-        this.message = response;
-        console.log('Token validation response:', response);
+        this.message = 'Token jest ważny';
+        console.log('Token validation successful:', response);
       },
       error => {
-        this.message = error.error;
+        this.message = 'Token jest nieważny lub wygasł';
         console.error('Token validation error:', error);
       }
     );
